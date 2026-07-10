@@ -13,6 +13,9 @@
 	let spinning: boolean = $state(false);
 
 	function getFilteredGames(): Game[] {
+		if (!nsfw && !sfw) {
+			return [];
+		}
 		if (nsfw && sfw) {
 			return filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount);
 		}
@@ -75,21 +78,24 @@
 		/>
 	</label>
 
-	<label class="mb-4 block text-sm font-medium text-gray-700">
-		SFW Games
-		<input 
-			type="checkbox"
-			bind:checked={sfw}
-		/>
-	</label>
-
-		<label class="mb-4 block text-sm font-medium text-gray-700">
-		NSFW Games
-		<input 
-			type="checkbox"
-			bind:checked={nsfw}
-		/>
-	</label>
+	<div class="mb-4 flex gap-4">
+		<label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 has-[:checked]:ring-2 has-[:checked]:ring-emerald-200">
+			<input
+				type="checkbox"
+				bind:checked={sfw}
+				class="h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 bg-white checked:border-emerald-600 checked:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 accent-emerald-600 transition"
+			/>
+			<span class="text-sm font-medium text-gray-700">SFW Games</span>
+		</label>
+		<label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 has-[:checked]:ring-2 has-[:checked]:ring-purple-200">
+			<input
+				type="checkbox"
+				bind:checked={nsfw}
+				class="h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 bg-white checked:border-purple-600 checked:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-0 accent-purple-600 transition"
+			/>
+			<span class="text-sm font-medium text-gray-700">NSFW Games</span>
+		</label>
+	</div>
 
 	<div class="mb-6 text-sm text-gray-500">
 		{getFilteredGames().length} game{getFilteredGames().length === 1 ? '' : 's'} available
@@ -97,27 +103,31 @@
 
 	{#if selectedGame}
 		<div class="flex items-center justify-center min-h-48">
-			<div
-				class="relative rounded-xl border-2 border-emerald-300 bg-emerald-50 px-8 py-8 text-center shadow-sm ring-2 ring-emerald-100 transition-shadow hover:shadow-md"
-			>
+			{#if spinning}
 				<div
-					class="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white"
+					class="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 px-8 py-8 text-center text-gray-400"
 				>
-					✓
-				</div>
-				{#if spinning}
-					<h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+					<h3 class="mb-1 text-2xl font-bold tracking-tight">
 						<span class="inline-block animate-[shuffle_0.15s_linear_infinite]"
 							>{selectedGame.name}</span
 						>
 					</h3>
-				{:else}
-					<h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{selectedGame.name}</h3>
-				{/if}
-				<span class="text-base text-gray-600"
-					>~{selectedGame.playTime} · {selectedGame.minPlayers}–{selectedGame.maxPlayers} players</span
+				</div>
+			{:else}
+				<div
+					class="relative rounded-xl border-2 border-emerald-300 bg-emerald-50 px-8 py-8 text-center shadow-sm ring-2 ring-emerald-100 transition-shadow hover:shadow-md"
 				>
-			</div>
+					<div
+						class="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white"
+					>
+						✓
+					</div>
+					<h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{selectedGame.name}</h3>
+					<span class="text-base text-gray-600"
+						>~{selectedGame.playTime} · {selectedGame.minPlayers}–{selectedGame.maxPlayers} players</span
+					>
+				</div>
+			{/if}
 		</div>
 	{:else}
 		<div class="flex items-center justify-center min-h-48">
