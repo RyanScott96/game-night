@@ -1,17 +1,24 @@
 <script lang="ts">
 	import type { Game } from '$lib/games';
-	import { loadGames, filterGames, filterGamesByPlayers } from '$lib/games';
+	import { loadGames, filterGames, filterGamesByPlayers, filterGamesByNSFW } from '$lib/games';
 
 	let { onselect }: { onselect?: (game: Game) => void } = $props();
 
 	let games: Game[] = $state(loadGames());
 	let maxPlayTime: number = $state(90);
 	let playerCount: number = $state(2);
+	let sfw: boolean = $state(true);
+	let nsfw: boolean = $state(false);
 	let selectedGame: Game | null = $state(null);
 	let spinning: boolean = $state(false);
 
 	function getFilteredGames(): Game[] {
-		return filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount);
+		if (nsfw && sfw) {
+			return filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount);
+		}
+		else {
+			return filterGamesByNSFW(filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount), !sfw);
+		}
 	}
 
 	function roll() {
@@ -68,12 +75,28 @@
 		/>
 	</label>
 
+	<label class="mb-4 block text-sm font-medium text-gray-700">
+		SFW Games
+		<input 
+			type="checkbox"
+			bind:checked={sfw}
+		/>
+	</label>
+
+		<label class="mb-4 block text-sm font-medium text-gray-700">
+		NSFW Games
+		<input 
+			type="checkbox"
+			bind:checked={nsfw}
+		/>
+	</label>
+
 	<div class="mb-6 text-sm text-gray-500">
 		{getFilteredGames().length} game{getFilteredGames().length === 1 ? '' : 's'} available
 	</div>
 
 	{#if selectedGame}
-		<div class="flex items-center justify-center min-h-[12rem]">
+		<div class="flex items-center justify-center min-h-48">
 			<div
 				class="relative rounded-xl border-2 border-emerald-300 bg-emerald-50 px-8 py-8 text-center shadow-sm ring-2 ring-emerald-100 transition-shadow hover:shadow-md"
 			>
@@ -97,7 +120,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="flex items-center justify-center min-h-[12rem]">
+		<div class="flex items-center justify-center min-h-48">
 			<div
 				class="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 px-8 py-8 text-center text-gray-400"
 			>
