@@ -18,9 +18,11 @@
 		}
 		if (nsfw && sfw) {
 			return filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount);
-		}
-		else {
-			return filterGamesByNSFW(filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount), !sfw);
+		} else {
+			return filterGamesByNSFW(
+				filterGamesByPlayers(filterGames(games, maxPlayTime), playerCount),
+				!sfw
+			);
 		}
 	}
 
@@ -54,7 +56,7 @@
 	}
 </script>
 
-<div class="mx-auto w-full max-w-md">
+<div class="mx-auto w-full max-w-md px-4 py-8 sm:px-0">
 	<label class="mb-4 block text-sm font-medium text-gray-700">
 		Max play time
 		<input
@@ -78,8 +80,10 @@
 		/>
 	</label>
 
-	<div class="mb-4 flex gap-4">
-		<label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 has-[:checked]:ring-2 has-[:checked]:ring-emerald-200">
+	<div class="mb-4 flex flex-col gap-3 sm:flex-row sm:gap-4">
+		<label
+			class="flex-1 cursor-pointer rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 has-[:checked]:ring-2 has-[:checked]:ring-emerald-200"
+		>
 			<input
 				type="checkbox"
 				bind:checked={sfw}
@@ -87,7 +91,9 @@
 			/>
 			<span class="text-sm font-medium text-gray-700">SFW Games</span>
 		</label>
-		<label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 has-[:checked]:ring-2 has-[:checked]:ring-purple-200">
+		<label
+			class="flex-1 cursor-pointer rounded-lg border border-gray-200 px-4 py-3 transition hover:bg-gray-50 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 has-[:checked]:ring-2 has-[:checked]:ring-purple-200"
+		>
 			<input
 				type="checkbox"
 				bind:checked={nsfw}
@@ -143,6 +149,7 @@
 		<p class="mt-4 text-center text-sm text-gray-400">No games match the current filter.</p>
 	{:else}
 		<button
+			type="button"
 			onclick={roll}
 			disabled={spinning}
 			class="mt-4 w-full rounded-lg bg-emerald-600 px-4 py-3 text-lg font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
