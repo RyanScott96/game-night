@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@keyframes shuffle {
+	0%,
+	100% {
+		transform: translateY(-3px);
+		opacity: 0.7;
+	}
+	50% {
+		transform: translateY(3px);
+		opacity: 1;
+	}
+}

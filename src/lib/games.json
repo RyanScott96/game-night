@@ -1,0 +1,12 @@
+[
+	{ "name": "Azul", "playTime": 30, "minPlayers": 2, "maxPlayers": 4 },
+	{ "name": "Catan", "playTime": 75, "minPlayers": 3, "maxPlayers": 4 },
+	{ "name": "Ticket to Ride", "playTime": 60, "minPlayers": 2, "maxPlayers": 5 },
+	{ "name": "Ricochet Hot Pursuit", "playTime": 20, "minPlayers": 2, "maxPlayers": 5 },
+	{ "name": "Santorini", "playTime": 40, "minPlayers": 2, "maxPlayers": 5 },
+	{ "name": "Patchwork", "playTime": 25, "minPlayers": 2, "maxPlayers": 2 },
+	{ "name": "7 Wonders Duel", "playTime": 30, "minPlayers": 2, "maxPlayers": 2 },
+	{ "name": "Scythe", "playTime": 90, "minPlayers": 1, "maxPlayers": 5 },
+	{ "name": "Wingspan", "playTime": 70, "minPlayers": 1, "maxPlayers": 5 },
+	{ "name": "Taco Chat", "playTime": 20, "minPlayers": 3, "maxPlayers": 99 }
+]
