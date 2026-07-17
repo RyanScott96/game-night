@@ -56,7 +56,7 @@
 	}
 </script>
 
-<div class="mx-auto w-full max-w-md px-4 py-8 sm:px-0">
+<div class="mx-auto w-full max-w-md px-4 sm:px-0">
 	<label class="mb-4 block text-sm font-medium text-gray-700">
 		Max play time
 		<input
