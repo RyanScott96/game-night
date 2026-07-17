@@ -6,20 +6,46 @@ SvelteKit app (Svelte 5 runes mode) that randomly picks a board game from a loca
 
 - Svelte 5, SvelteKit, TypeScript strict mode
 - TailwindCSS v4 (Vite plugin)
-- Vercel adapter
+- Node.js adapter (for Docker/self-hosted)
 - Prettier (Svelte + Tailwind plugins) + ESLint 10
+- Deno for dependency management and task runner
+
+## Docker
+
+Build and run with docker compose. The app is exposed on port 3000 for local network access.
+
+```sh
+docker compose up -d    # start in background
+docker compose down      # stop
+docker compose build --no-cache .  # rebuild without cache
+```
+
+Defaults to port 3000. Override with `PORT` env var before running compose:
+
+```sh
+PORT=8080 docker compose up -d
+```
+
+The container runs a Node.js production server binding to `0.0.0.0`.
+
+## Deno best practices
+
+- Use `deno install` / `deno add` for dependencies (not `npm install`)
+- Use `deno task` for project tasks (not `npm run`)
+- Run `deno upgrade --check` to verify dependencies after changes
+- Deno uses `deno.json` / `deno.jsonc` for configuration — align tasks and imports accordingly
 
 ## Commands
 
 ```sh
-npm run dev          # start dev server
-npm run build        # production build
-npm run check        # svelte-kit sync + svelte-check
-npm run lint         # prettier --check . && eslint .
-npm run format       # prettier --write .
+deno task dev          # start dev server
+deno task build        # production build
+deno task check        # svelte-kit sync + svelte-check
+deno task lint         # prettier --check . && eslint .
+deno task format       # prettier --write .
 ```
 
-`lint` does not run tests — this project has no test framework. Verification is `check` + `lint` only.
+`task lint` does not run tests — this project has no test framework. Verification is `task check` + `task lint` only.
 
 ## Svelte 5 conventions
 
@@ -49,6 +75,6 @@ src/
 
 - The app uses `.json` not `.jsonc` — the original `.jsonc` was renamed for SSR compatibility
 - `$lib/games.json` import requires the ambient declaration in `src/lib/types.d.ts`
-- `svelte-kit sync` runs automatically via `npm run prepare` but may need manual re-run after editing `games.json`
+- `svelte-kit sync` runs automatically via `deno task prepare` but may need manual re-run after editing `games.json`
 - Prettier config enforces `useTabs: true, singleQuote: true, trailingComma: 'none'`
 - `.npmrc` has `engine-strict=true` — node version must match `.nvmrc` or `.node-version` if present
