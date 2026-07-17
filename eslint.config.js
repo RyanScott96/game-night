@@ -24,6 +24,10 @@ export default defineConfig(
 		}
 	},
 	{
+		files: ['src/lib/components/nav/NavBar.svelte'],
+		rules: { 'svelte/no-navigation-without-resolve': 'off' }
+	},
+	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
 			parserOptions: {
